@@ -1,4 +1,4 @@
-from flask import Flask, g, url_for, render_template
+from flask import Flask, g, url_for, render_template, request, redirect
 import os
 import click
 import sqlite3
@@ -38,8 +38,18 @@ def run_command():
 	app.run('0.0.0.0', 5005, True)
 
 @app.route('/')
-def show_entries():
+def show_blogs():
 	db = get_db()
 	cur = db.execute('select title, content from blog order by id desc')
 	blogs = cur.fetchall()
 	return render_template('index.html', entries=blogs)
+
+@app.route('/add')
+def add_blog():
+	db = get_db()
+	db.execute('insert into blog(title, content) values(?, ?)', 
+				[request.form['title'], request.form['content']])
+	db.commit()
+	flash('a new blog')
+	return redirect(url_for('show_blogs'))
+	
