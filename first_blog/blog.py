@@ -1,4 +1,4 @@
-from flask import Flask, g, url_for, render_template, request, redirect
+from flask import Flask, g, url_for, render_template, request, redirect, session, flash
 import os
 import click
 import sqlite3
@@ -7,7 +7,10 @@ app = Flask(__name__)
 
 #配置信息
 app.config.update(dict(
-	DATABASE=os.path.join(app.root_path, 'myblog.db')
+	DATABASE=os.path.join(app.root_path, 'myblog.db'),
+	USERNAME='admin',
+	PASSWORD='admin',
+	SECRET_KEY='key',
 ))
 
 #库表信息
@@ -44,7 +47,7 @@ def show_blogs():
 	blogs = cur.fetchall()
 	return render_template('index.html', entries=blogs)
 
-@app.route('/add')
+@app.route('/add', methods=['POST'])
 def add_blog():
 	db = get_db()
 	db.execute('insert into blog(title, content) values(?, ?)', 
@@ -53,3 +56,18 @@ def add_blog():
 	flash('a new blog')
 	return redirect(url_for('show_blogs'))
 	
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+	error = None
+	if request.method == 'POST':
+		if request.form['username'] != app.config['USERNAME']:
+			error = 'Invalid username'
+		elif request.form['password'] != app.config['PASSWORD']:
+			error = 'Invalid password'
+		else:
+			session['logged_in'] = True
+			flash('i am login')
+			return redirect(url_for('show_blogs'))
+	return render_template('login.html', error=error)
+			
+		
