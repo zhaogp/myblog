@@ -4,6 +4,12 @@
 <div class="page">
 	<h1>my blog</h1>
 	<div class="metanav">
+		{% if not session.logged_in %}
+			<a href="{{ url_for('login') }}">log inin</a>
+		{% else %}
+			<a href="{{ url_for('logout') }}">log outout</a>
+		{% endif %}
+	</div>
 	{% for message in get_flashed_messages() %}
 		<div class="flash">{{ message }}</div>
 	{% endfor %}

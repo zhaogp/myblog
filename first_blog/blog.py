@@ -70,4 +70,8 @@ def login():
 			return redirect(url_for('show_blogs'))
 	return render_template('login.html', error=error)
 			
-		
+@app.route('/logout')
+def logout():	
+	session.pop('logged_in', None)
+	flash('is logged out')
+	return redirect(url_for('show_blogs'))
