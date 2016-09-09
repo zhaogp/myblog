@@ -60,9 +60,9 @@ def add_blog():
 def login():
 	error = None
 	if request.method == 'POST':
-		if request.form['username'] != app.config['USERNAME']:
+		if request.form['loginname'] != app.config['USERNAME']:
 			error = 'invalid username'
-		elif request.form['password'] != app.config['PASSWORD']:
+		elif request.form['nloginpwd'] != app.config['PASSWORD']:
 			error = 'invalid password'
 		else:
 			session['logged_in'] = True
