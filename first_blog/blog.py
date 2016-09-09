@@ -68,7 +68,7 @@ def login():
 			session['logged_in'] = True
 			flash('i am login')
 			return redirect(url_for('show_blogs'))
-	return render_template('login.html', error=error)
+	return render_template('login.html', ierror=error)
 			
 @app.route('/logout')
 def logout():	
