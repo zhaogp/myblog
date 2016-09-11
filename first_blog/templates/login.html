@@ -1,16 +1,40 @@
 {% extends "layout.html" %}
 {% block body %}
+	<script type="text/javascript">
+		function inputTipText(){
+			$("input[class*=grayTips]")
+			.each(function(){
+				var oldVal=$(this).val();
+				$(this)
+				.css({"color":"#888"})
+				.focus(function(){
+					if($(this).val()!=oldVal){
+						$(this).css({"color":"#000"})}
+					else
+						{$(this).val("").css({"color":"#888"})}
+				})
+				.blur(function(){
+					if($(this).val()==""){
+						$(this).val(oldVal).css({"color":"#888"})}
+				})
+				.keydown(function(){
+					$(this).css({"color":"#000"})
+				})
+			})
+		}
+		$(function(){inputTipText()});
+	</script>
 	<h2>Login</h2>
 	{% if ierror %}
 		<p class="error"><strong>Error...</strong>{{ ierror }}
 	{% endif %}
 	<form action="{{ url_for('login') }}" method="post">
 		<dl>
-			<dt>username:
-			<dd><input type="text" name="username">
-			<dt>password:
-			<dd><input type="text" name="password">
-			<dd><input id="login" type="submit" value="login">
+			<!--<dt>用户名-->
+			<dd><input type="text" name="username" class="grayTips" value="用户名">
+			<!--<dt>密码-->
+			<dd><input type="text" name="password" class="grayTips" value="密码">
+			<dd><input id="login" type="submit" value="登录">
 		</dl>
 	</form>
 

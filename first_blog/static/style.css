@@ -16,3 +16,6 @@ h2              { font-size: 1.2em; }
 .flash          { background: #CEE5F5; padding: 0.5em;
                   border: 1px solid #AACBE2; }
 .error          { background: #F0D6D6; padding: 0.5em; }
+.grayTips 		{ margin: 0.8em 1.2em; }
+
+#login 			{ margin: 0.8em 1.2em;  width: 160px; letter-spacing: 20px}

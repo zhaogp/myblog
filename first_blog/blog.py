@@ -61,9 +61,9 @@ def login():
 	error = None
 	if request.method == 'POST':
 		if request.form['username'] != app.config['USERNAME']:
-			error = 'Invalid username'
+			error = 'invalid username'
 		elif request.form['password'] != app.config['PASSWORD']:
-			error = 'Invalid password'
+			error = 'invalid password'
 		else:
 			session['logged_in'] = True
 			flash('i am login')
