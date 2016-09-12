@@ -13,6 +13,11 @@ app.config.update(dict(
 	SECRET_KEY='key',
 ))
 
+from flask_moment import Moment
+moment = Moment(app)
+
+from datetime import datetime
+
 #库表信息
 def conn_db():
 	rv = sqlite3.connect(app.config['DATABASE'])

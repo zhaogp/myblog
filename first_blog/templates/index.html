@@ -16,6 +16,8 @@
 <ul class="entries">
 {% for entry in entries %}
 	<li><h2>{{ entry.title }}</h2>{{ entry.content|safe }}</li>
+	<div>{{ moment(local=True).format('YYYY-MM-DD h:mm:ss') }}</div>
+	<div>{{ moment(local=True).fromNow() }}</div>
 {% else %}
 	<li><em>no blog !!!</em></li>
 {% endfor %}

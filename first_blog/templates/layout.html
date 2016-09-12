@@ -1,5 +1,10 @@
 <!doctype html>
 <title>my blog</title>
+<head>
+	{{ moment.include_jquery() }}
+	{{ moment.include_moment() }}
+	{{ moment.lang("zh-CN") }}
+</head>
 <script type="text/javascript" 
 		src="{{ url_for('static', filename='jquery.js') }}">
 </script>
