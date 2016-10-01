@@ -5,7 +5,7 @@
 	<form action="{{ url_for('add_blog') }}" method="post" class="add-entry">
 		<dl>
 			<dt>Title
-			<dd><input type="text" size="30" name="title">
+			<dd><input name="title" type="text" size="30" >
 			<dt>Content
 			<dd><textarea name="content" rows="5" cols="40"></textarea>
 			<dd> <input type="submit" value="Share"> 
@@ -16,8 +16,6 @@
 <ul class="entries">
 {% for entry in entries %}
 	<li><h2>{{ entry.title }}</h2>{{ entry.content|safe }}</li>
-	<div>{{ moment(local=True).format('YYYY-MM-DD h:mm:ss') }}</div>
-	<div>{{ moment(local=True).fromNow() }}</div>
 {% else %}
 	<li><em>no blog !!!</em></li>
 {% endfor %}

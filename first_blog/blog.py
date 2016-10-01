@@ -2,21 +2,22 @@ from flask import Flask, g, url_for, render_template, request, redirect, session
 import os
 import click
 import sqlite3
+from first_blog.database import db_session, init_db
+from datetime import datetime
 
 app = Flask(__name__)
 
 #配置信息
 app.config.update(dict(
-	DATABASE=os.path.join(app.root_path, 'myblog.db'),
 	USERNAME='admin',
 	PASSWORD='admin',
 	SECRET_KEY='key',
 ))
 
-from flask_moment import Moment
-moment = Moment(app)
 
-from datetime import datetime
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+	db_session.remove()
 
 #库表信息
 def conn_db():
@@ -29,16 +30,13 @@ def get_db():
 		g.sqlite_db = conn_db()
 	return g.sqlite_db
 
-def init_db():
+def initdb():
 	with app.app_context():
-		db = get_db()
-		with app.open_resource('schema.sql', mode='r') as f:
-			db.cursor().executescript(f.read())
-		db.commit()
+		init_db()
 
 @click.command()
 def initdb_command():
-	init_db()
+	initdb()
 	print('init db ...')
 
 @click.command()
@@ -47,17 +45,15 @@ def run_command():
 
 @app.route('/')
 def show_blogs():
-	db = get_db()
-	cur = db.execute('select title, content from blog order by id desc')
+	cur = db_session.execute('select * from blog order by id desc')
 	blogs = cur.fetchall()
 	return render_template('index.html', entries=blogs)
 
 @app.route('/add', methods=['POST'])
 def add_blog():
-	db = get_db()
-	db.execute('insert into blog(title, content) values(?, ?)', 
+	db_session.execute('insert into blog (title, content) values (?, ?)', 
 				[request.form['title'], request.form['content']])
-	db.commit()
+	db_session.commit()
 	flash('a new blog')
 	return redirect(url_for('show_blogs'))
 	
