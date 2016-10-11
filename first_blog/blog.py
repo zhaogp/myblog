@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config.update(dict(
 	DATABASE=os.path.join(app.root_path, 'myblog.db'),
 	USERNAME='admin',
-	PASSWORD='admin',
+	PASSWORD='11111',
 	SECRET_KEY='key',
 ))
 
