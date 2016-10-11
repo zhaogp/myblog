@@ -2,7 +2,7 @@ from flask import Flask, g, url_for, render_template, request, redirect, session
 import os
 import click
 import sqlite3
-from first_blog.database import db_session, init_db
+from first_blog.database import db_session, initdb
 from datetime import datetime
 
 app = Flask(__name__)
