@@ -2,7 +2,7 @@ from flask import Flask, g, url_for, render_template, request, redirect, session
 import os
 import click
 import sqlite3
-from first_blog.database import db_session, initdb
+from first_blog.database import db_session, init_db
 from datetime import datetime
 
 app = Flask(__name__)
@@ -51,8 +51,8 @@ def show_blogs():
 
 @app.route('/add', methods=['POST'])
 def add_blog():
-	db_session.execute('insert into blog(title, content) values(?, ?)', 
-				[request.form['title'], request.form['content']])
+	db_session.execute('insert into blog(title, content) values("%s", "%s")' 
+				%(request.form['title'], request.form['content']))
 	db_session.commit()
 	flash('a new blog')
 	return redirect(url_for('show_blogs'))

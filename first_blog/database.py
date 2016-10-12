@@ -9,7 +9,7 @@ db_session = scoped_session(sessionmaker(autocommit=False,
 Base = declarative_base()
 Base.query = db_session.query_property()
 
-def initdb():
+def init_db():
 	import first_blog.models
 	Base.metadata.create_all(bind=engine)
 
