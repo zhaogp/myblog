@@ -51,8 +51,8 @@ def show_blogs():
 
 @app.route('/add', methods=['POST'])
 def add_blog():
-	db_session.execute('insert into blog(title, content) values("%s", "%s")' 
-				%(request.form['title'], request.form['content']))
+	db_session.execute('insert into blog(title, content) values("%s", "%s")'
+		%(request.form['title'], request.form['content']))
 	db_session.commit()
 	flash('a new blog')
 	return redirect(url_for('show_blogs'))
