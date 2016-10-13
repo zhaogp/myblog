@@ -7,7 +7,7 @@ class Blog(Base):
 	id = Column(Integer, primary_key=True)	
 	title = Column(String(101), nullable=False)
 	content = Column(String(150), nullable=False)
-	pub_date = Column(DateTime, nullable=False) 
+	pub_date = Column(DateTime, index=True) 
 
 	def __init__(self, title, content, pub_date=datetime.now()):
 		self.title = title
