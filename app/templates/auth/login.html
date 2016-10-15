@@ -28,7 +28,7 @@
 	{% if ierror %}
 		<p class="error"><strong>Error...</strong>{{ ierror }}
 	{% endif %}
-	<form action="{{ url_for('login') }}" method="post">
+	<form action="{{ url_for('auth.login') }}" method="post">
 		<dl>
 			<!--<dt>用户名-->
 			<dd><input type="text" name="loginname" class="grayTips" value="用户名">

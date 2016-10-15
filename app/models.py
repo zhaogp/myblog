@@ -1,7 +1,10 @@
-from sqlalchemy import Integer, String, Column, DateTime
-from first_blog.database import Base
+from sqlalchemy import Integer, String, Column, DateTime, ForeignKey
+from app.database import Base
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from flask_login import UserMixin
+
 
 class Blog(Base):
 	__tablename__ = 'blog'
@@ -18,11 +21,13 @@ class Blog(Base):
 	def __repr__(self):
 		return '<Blog %r>'%self.title
 
-class User(Base):
+class User(UserMixin, Base):
 	__tablename__ = 'user'
 	id = Column(Integer, primary_key=True)
-	user_name = Column(String(50), nullable=False)
+	email = Column(String(64), unique=True, index=True)
+	username = Column(String(60), nullable=False)
 	password_hash = Column(String(128))
+	# role_id = Column(Integer, ForeignKey('role.id') )
 	
 	# def __init__(self, user_name):
 		# self.user_name = user_name

@@ -11,6 +11,6 @@ Base = declarative_base()
 Base.query = db_session.query_property()
 
 def init_db():
-	import first_blog.models
+	import app.models
 	Base.metadata.create_all(bind=engine)
 
