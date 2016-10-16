@@ -10,3 +10,10 @@ def index():
 	blogs = cur.fetchall()
 	return render_template('main/index.html', entries=blogs)
 
+@main.route('/add', methods=['GET', 'POST'])
+def add():
+	db_session.execute('insert into blog(title, content, pub_date) values("%s", "%s", "%s")'
+		%(request.form['title'], request.form['content'], datetime.now()))	
+	db_session.commit()
+	flash('add a new blog')
+	return redirect(url_for('index'))
