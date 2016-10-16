@@ -4,7 +4,7 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_login import UserMixin
-
+from . import login_manager
 
 class Blog(Base):
 	__tablename__ = 'blog'
@@ -24,13 +24,8 @@ class Blog(Base):
 class User(UserMixin, Base):
 	__tablename__ = 'user'
 	id = Column(Integer, primary_key=True)
-	email = Column(String(64), unique=True, index=True)
 	username = Column(String(60), nullable=False)
 	password_hash = Column(String(128))
-	# role_id = Column(Integer, ForeignKey('role.id') )
-	
-	# def __init__(self, user_name):
-		# self.user_name = user_name
 
 	@property
 	def password(self):
@@ -44,4 +39,9 @@ class User(UserMixin, Base):
 		return check_password_hash(self.password_hash, password)
 
 	def __repr__(self):
-		return '<User %r>'%self.user_name
+		return '<User %r>'%self.username
+
+@login_manager.user_loader
+def load_user(user_id):
+	return User.query.get(int(user_id))
+
