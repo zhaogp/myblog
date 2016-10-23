@@ -12,7 +12,7 @@ from app.main.forms import BlogForm
 def index():
 	form = BlogForm()
 	
-	cur = db_session.execute('select * from blog order by id desc')
+	cur = db_session.execute('select * from blogs order by id desc')
 	blogs = cur.fetchall()
 	return render_template('main/index.html', entries=blogs)
 
