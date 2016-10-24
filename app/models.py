@@ -59,6 +59,8 @@ class User(UserMixin, Base):
 
 class AnonymousUser(AnonymousUserMixin):
 	def can(self, permission):
+		if permission == 'READ':
+			return True
 		return False
 	
 	def is_administration(self):
@@ -75,8 +77,9 @@ class Role(Base):
 	@staticmethod
 	def insert_role():
 		roles = {
-			'User' : Permission.WRITE,
-			'Admin' : Permission.ADMIN
+			'User' : (Permission.WRITE | Permission.READ),
+			'Admin' : Permission.ADMIN,
+			'Anonymous' : Permission.READ
 		}
 		
 		for r in roles:
@@ -92,6 +95,7 @@ class Role(Base):
 		return '<Role %r>'%self.name
 
 class Permission:
+	READ = 0x01
 	WRITE = 0x04
 	ADMIN = 0x80
 
