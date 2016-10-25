@@ -1,16 +1,11 @@
 {% extends "base.html"%}
 
 {% block page_content %}
-{% if session.logged_in %}
-	<form action="{{ url_for('add_blog') }}" method="post" class="add-entry">
-		<dl>
-			<dt>Title
-			<dd><input name="title" type="text" size="30" >
-			<dt>Content
-			<dd><textarea name="content" rows="5" cols="40"></textarea>
-			<dd> <input type="submit" value="Share"> 
-		</dl>
-	</form>
+Hello 
+{% if current_user.is_authenticated %}
+	{{ current_user.username }}
+{% else %}
+	Stranger
 {% endif %}
 
 <ul class="entries">

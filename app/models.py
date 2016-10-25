@@ -101,5 +101,5 @@ class Permission:
 
 @login_manager.user_loader
 def load_user(user_id):
-	return db_session.query(User).filter_by(id=user_id)
+	return db_session.query(User).get(int(user_id))
 
