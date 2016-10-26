@@ -17,10 +17,11 @@ class Blog(Base):
 
 	author = relationship('User', back_populates='blogs')
 
-	def __init__(self, title, content, pub_date=datetime.now()):
+	def __init__(self, title, content, author, pub_date):
 		self.title = title
 		self.content = content
 		self.pub_date = pub_date
+		self.author= author
 
 	def __repr__(self):
 		return '<Blog %r>'%self.title
@@ -51,8 +52,9 @@ class User(UserMixin, Base):
 		return check_password_hash(self.password_hash, password)
 
 	def can(self, permission):
-		return self.role_id is not None and \
-			(self.role_id.permission & permission) == permission
+		# return self.role_id is not None and \
+			# (self.role_id.permission & permission) == permission
+		return True
 
 	def __repr__(self):
 		return '<User %r>'%self.username
@@ -99,6 +101,7 @@ class Permission:
 	WRITE = 0x04
 	ADMIN = 0x80
 
+login_manager.anonymous_user = AnonymousUser
 @login_manager.user_loader
 def load_user(user_id):
 	return db_session.query(User).get(int(user_id))

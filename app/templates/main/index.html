@@ -1,4 +1,5 @@
 {% extends "base.html"%}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block page_content %}
 Hello 
@@ -8,12 +9,20 @@ Hello
 	Stranger
 {% endif %}
 
-<ul class="entries">
-{% for entry in entries %}
-	<li><h2>{{ entry.title }}</h2>{{ entry.content|safe }}</li>
-	<span>{{ entry.pub_date}}</span>
-{% else %}
-	<li><em>no one blog !!!</em></li>
+<div>
+	{% if current_user.can(Permission.WRITE) %}
+		{{ wtf.quick_form(form) }}
+	{% endif %}
+</div>
+
+<ul class="blogs">
+{% for blog in blogs %}
+	<li class="blog">
+		<div class="blog-title">{{ blog.title }}</div>
+		<div class="blog-content">{{ blog.content }}</div>
+		<div class="blog-pubdate">{{ blog.pub_date }}</div>
+	</li>
 {% endfor %}
 </ul>
+
 {% endblock%}
