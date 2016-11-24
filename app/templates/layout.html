@@ -3,12 +3,15 @@
 <script type="text/javascript" 
 		src="{{ url_for('static', filename='jquery.js') }}">
 </script>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" type="text/css" 
+		href="{{ url_for('static', filename='style.css') }}">
+</link>
 <div class="page">
 	<h1>my blog</h1>
 	<div class="metanav">
 		{% if not session.logged_in %}
 			<a href="{{ url_for('auth.login') }}">log inin</a>
+			<a href="{{ url_for('auth.register') }}">register</a>
 		{% else %}
 			<a class="link-logout" href="{{ url_for('auth.logout') }}">log outout</a>
 		{% endif %}
