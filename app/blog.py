@@ -2,7 +2,7 @@ from flask import Flask, g, url_for, render_template, request, redirect, session
 import os
 import click
 import sqlite3
-from first_blog.database import db_session, init_db
+from app.database import db_session, init_db
 from datetime import datetime
 
 app = Flask(__name__)
@@ -45,7 +45,7 @@ def run_command():
 
 @app.route('/')
 def show_blogs():
-	cur = db_session.execute('select * from blog order by id desc')
+	cur = db_session.execute('select * from blogs order by id desc')
 	blogs = cur.fetchall()
 	return render_template('index.html', entries=blogs)
 
